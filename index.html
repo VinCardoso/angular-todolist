@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todo">
+<head>
+
+	<meta charset="UTF-8">
+	<title>ToDo List</title>
+
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+
+	<link href="source/css/bootstrap.min.css" rel="stylesheet">
+	<link href="source/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container" ng-controller="todoController">
+
+	<div class="page-header">
+		<h1>ToDo List</h1>
+	</div>
+
+	<form name="todoform" ng-submit="create()">
+		<input type="text" class="form-control" name="newTodo" ng-model="newTodo" placeholder="Add a ToDo" required>
+		<button ng-disabled="todoform.$invalid" type="submit" class="btn btn-primary btn-block">Add ToDo</button>
+	</form>
+
+	<ul>
+		<li ng-repeat="todo in todos" class="well well-sm" ng-class="{'done':todo.done, 'editing':todo.editMode}">
+
+			<div>
+
+				<input type="text" on-enter="save(todo)" on-esc="cancel(todo)" ng-show="todo.editMode" ng-model="todo.tmp" id="edit-todo-{{$index}}">
+
+				<button ng-click="cancel(todo)" ng-show="todo.editMode" class="btn btn-danger btn-xs cancel">Cancel</button>
+				<button ng-show="todo.editMode" class="btn btn-success btn-xs save" ng-click="save(todo)">Save</button>
+
+				<span>
+
+					<input ng-hide="todo.editMode" type="checkbox" ng-model="todo.done">
+					<span ng-hide="todo.editMode" ng-click="edit(todo)">{{todo.title}}</span>
+
+					<button type="button" ng-callback="delete(todo)" alert-msg="Are you sure?" class="btn btn-danger btn-xs delete">Delete</button>
+					<button type="button" ng-click="edit(todo)" class="btn btn-success btn-xs edit">Edit</button>
+
+				</span>
+
+			</div>
+
+		</li>
+	</ul>
+
+</div>
+
+<footer class="footer">
+	<div class="container">
+		<p class="text-muted">ToDo List for SocialBase Challenge</p>
+	</div>
+</footer>
+
+<script src="source/js/angular.min.js"></script>
+<script src="source/js/angular-script.js"></script>
+
+</body>
+</html>
